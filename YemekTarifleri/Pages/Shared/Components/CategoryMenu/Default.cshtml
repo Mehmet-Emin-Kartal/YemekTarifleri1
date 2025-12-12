@@ -1,0 +1,39 @@
+﻿@model List<YemekTarifleri.Models.Category>
+
+@* Hepsiburada tarzı yatay kategori menüsü için Bootstrap Nav kullanıyoruz. *@
+@* Menünün tam genişlikte ve Navbar'ın altında görünmesi için _Layout'ta çağırmıştık. *@
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom mb-4 shadow-sm">
+    <div class="container">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            @* Ana Kategoriler *@
+            @foreach (var mainCategory in Model.Where(c => c.ParentCategoryId == null).OrderBy(c => c.Name))
+            {
+                var childCategories = Model.Where(c => c.ParentCategoryId == mainCategory.Id).OrderBy(c => c.Name).ToList();
+
+                @if (childCategories.Any())
+                {
+                    @* Alt Kategorisi olanlar için Dropdown Menü *@
+                    <li class="nav-item dropdown me-3">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdown_@mainCategory.Id" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            @mainCategory.Name
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown_@mainCategory.Id">
+                            @foreach (var subCategory in childCategories)
+                            {
+                                @* Alt kategori linki (şimdilik boş) *@
+                                <li><a class="dropdown-item" href="#">@subCategory.Name</a></li>
+                            }
+                        </ul>
+                    </li>
+                }
+                else
+                {
+                    @* Alt Kategorisi olmayanlar için normal link *@
+                    <li class="nav-item me-3">
+                        <a class="nav-link fw-bold" href="#">@mainCategory.Name</a>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+</nav>

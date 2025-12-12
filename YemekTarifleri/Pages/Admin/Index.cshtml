@@ -1,0 +1,67 @@
+﻿@page
+@model YemekTarifleri.Pages.Admin.IndexModel
+@{
+    ViewData["Title"] = "Admin Anasayfa";
+}
+
+<div class="row">
+
+    @* SOL KOLON: YÖNETİM MENÜSÜ BURADA *@
+    <div class="col-md-3">
+        <h5 class="mt-2 mb-3 border-bottom pb-2">Yönetim Menüsü</h5>
+        <div class="list-group">
+            <a asp-page="/Admin/Index" class="list-group-item list-group-item-action active"><i class="bi bi-house-fill"></i> Ana Sayfa</a>
+            <a asp-page="/Admin/Categories/Index" class="list-group-item list-group-item-action"><i class="bi bi-tag-fill"></i> Kategorileri Yönet</a>
+            <a asp-page="/Admin/Recipes/Index" class="list-group-item list-group-item-action"><i class="bi bi-book-fill"></i> Tarifleri Yönet</a>
+            <a asp-page="/Admin/Users/Index" class="list-group-item list-group-item-action"><i class="bi bi-people-fill"></i> Kullanıcıları Yönet</a>
+
+            <hr class="my-2" />
+            <a asp-page="/Logout" class="list-group-item list-group-item-action text-danger"><i class="bi bi-box-arrow-right"></i> Çıkış Yap</a>
+        </div>
+    </div>
+
+    @* SAĞ KOLON: KARTLAR BURADA *@
+    <div class="col-md-9">
+        <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">Hoş geldiniz, admin!</h4>
+            <p>Bu alana sadece Admin yetkisine sahip kullanıcılar erişebilir.</p>
+            <hr>
+            <p class="mb-0">Yönetim paneli üzerinden tüm içerikleri yönetebilirsiniz.</p>
+        </div>
+
+        <div class="row text-center">
+            @* Kategori Yönetimi Kartı *@
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-tag-fill"></i> Kategori Yönetimi</h5>
+                        <p class="card-text">Yeni kategori ekle, var olanları düzenle veya sil.</p>
+                        <a asp-page="/Admin/Categories/Index" class="btn btn-primary mt-2">Yönet</a>
+                    </div>
+                </div>
+            </div>
+
+            @* Tarif Yönetimi Kartı *@
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-book-fill"></i> Tarif Yönetimi</h5>
+                        <p class="card-text">Tüm tarifleri onayla, düzenle veya yeni tarif ekle.</p>
+                        <a asp-page="/Admin/Recipes/Index" class="btn btn-primary mt-2">Yönet</a>
+                    </div>
+                </div>
+            </div>
+
+            @* Kullanıcı Yönetimi Kartı *@
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-people-fill"></i> Kullanıcı Yönetimi</h5>
+                        <p class="card-text">Kullanıcı listesini gör, yetki ver/al veya sil.</p>
+                        <a asp-page="/Admin/Users/Index" class="btn btn-primary mt-2">Yönet</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

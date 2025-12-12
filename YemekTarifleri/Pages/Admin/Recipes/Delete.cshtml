@@ -1,0 +1,39 @@
+﻿@page "{id:int?}"
+@model YemekTarifleri.Pages.Admin.Recipes.DeleteModel
+
+@{
+    ViewData["Title"] = "Tarif Sil";
+    Layout = "/Pages/Admin/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <h3 class="text-danger mb-4">Tarif Silme Onayı</h3>
+    <h4 class="mb-4">Bu tarifi kalıcı olarak silmek istediğinizden emin misiniz?</h4>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h5 class="card-title">@Html.DisplayFor(model => model.Recipe.Title)</h5>
+            <p class="card-text text-muted">Kategori: @Html.DisplayFor(model => model.Recipe.Category.Name)</p>
+
+            @if (!string.IsNullOrEmpty(Model.Recipe.ImagePath))
+            {
+                <img src="@Model.Recipe.ImagePath" alt="Tarif Resmi" style="max-width: 200px; height: auto; border-radius: 5px; margin-bottom: 15px;" />
+            }
+
+            <dl class="row mt-3">
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Recipe.ShortDescription)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Recipe.ShortDescription)
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <form method="post" class="mt-4">
+        <input type="hidden" asp-for="Recipe.Id" />
+        <input type="submit" value="Evet, Sil" class="btn btn-danger" />
+        <a asp-page="./Index" class="btn btn-secondary ms-2">İptal ve Listeye Geri Dön</a>
+    </form>
+</div>

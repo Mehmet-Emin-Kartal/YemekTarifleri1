@@ -1,0 +1,48 @@
+﻿@page
+@model YemekTarifleri.Pages.Admin.Categories.CreateModel
+@{
+    ViewData["Title"] = "Yeni Kategori Ekle";
+    Layout = "/Pages/Admin/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8">
+            <h3 class="mb-4">@ViewData["Title"]</h3>
+
+            <form method="post">
+
+                @* Hata Özeti *@
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                @* Kategori Adı Alanı *@
+                <div class="form-group mb-3">
+                    <label asp-for="Input.Name" class="control-label"></label>
+                    <input asp-for="Input.Name" class="form-control" />
+                    <span asp-validation-for="Input.Name" class="text-danger"></span>
+                </div>
+
+                @* Üst Kategori Seçim Alanı *@
+                <div class="form-group mb-4">
+                    <label asp-for="Input.ParentCategoryId" class="control-label"></label>
+                    <select asp-for="Input.ParentCategoryId" class="form-control"
+                            asp-items="Model.ParentCategoryList">
+                    </select>
+                    <span asp-validation-for="Input.ParentCategoryId" class="text-danger"></span>
+                </div>
+
+                @* Kaydetme Butonu *@
+                <div class="form-group">
+                    <input type="submit" value="Kategoriyi Kaydet" class="btn btn-success" />
+                    <a asp-page="Index" class="btn btn-secondary ms-2">Listeye Geri Dön</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,42 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Ana Sayfa";
+    // Layout dosyasındaki col-md-9 içine yerleşeceği için bu sayfada ayrıca layout çağırmaya gerek yok.
+}
+
+<div class="text-center mb-4">
+    <h1 class="display-4">Yemek Tarifleri Dünyasına Hoş Geldiniz!</h1>
+    <p>En sevilen ve denenmiş tarifleri keşfedin.</p>
+</div>
+
+<div class="row">
+    <h4 class="mb-3 border-bottom pb-1">Son Eklenen Tarifler</h4>
+    <div class="row">
+
+        @if (Model.RecipeList != null && Model.RecipeList.Any())
+        {
+            @foreach (var item in Model.RecipeList)
+            {
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <img src="@item.ImagePath" class="card-img-top" alt="@item.Title" style="height: 200px; object-fit: cover;">
+                        <div class="card-body">
+                            <span class="badge bg-primary mb-2">@item.Category.Name</span>
+                            <h5 class="card-title">@item.Title</h5>
+                            <p class="card-text small text-muted">Yazar: @item.Author.Username</p>
+                            <p class="card-text">@item.ShortDescription</p>
+                        </div>
+                        <div class="card-footer bg-white border-top-0">
+                            <a asp-page="/Recipe" asp-route-id="@item.Id" class="btn btn-sm btn-info text-white">Tarife Git</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p class="text-center text-muted">Henüz hiç tarif eklenmedi.</p>
+        }
+    </div>
+</div>

@@ -1,0 +1,44 @@
+﻿@page
+@model YemekTarifleri.Pages.Admin.Categories.DeleteModel
+@{
+    ViewData["Title"] = "Kategori Silme Onayı";
+    Layout = "/Pages/Admin/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8">
+            <h3 class="mb-4 text-danger">@ViewData["Title"]</h3>
+
+            <h4 class="text-danger">Bu kategoriyi silmek istediğinizden emin misiniz?</h4>
+            <hr />
+
+            <dl class="row">
+
+                @* Kategori Adı *@
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Category.Name)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Category.Name)
+                </dd>
+
+                @* Üst Kategori *@
+                <dt class="col-sm-4">
+                    Üst Kategori
+                </dt>
+                <dd class="col-sm-8">
+                    @(Model.Category.ParentCategory?.Name ?? "Yok")
+                </dd>
+            </dl>
+
+            <form method="post">
+                @* Silinecek kaydın ID'si gizli olarak gönderilir *@
+                <input type="hidden" asp-for="Category.Id" />
+
+                <input type="submit" value="Evet, Sil" class="btn btn-danger" />
+                <a asp-page="./Index" class="btn btn-secondary ms-2">İptal / Listeye Geri Dön</a>
+            </form>
+        </div>
+    </div>
+</div>

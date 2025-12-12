@@ -1,0 +1,92 @@
+﻿@page "{id:int}"
+@model RecipeModel
+@{
+    ViewData["Title"] = Model.Recipe.Title;
+}
+
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+
+        <h1 class="display-4 mb-4">@Model.Recipe.Title</h1>
+        <p class="text-muted small">
+            Yayınlayan: **@Model.Recipe.Author.Username** | @* DÜZELTİLDİ *@
+            Kategori: **@Model.Recipe.Category.Name** |
+            Tarih: **Tarif Tarihi Belirtilmemiş** @* CreationDate olmadığı için kaldırıldı *@
+        </p>
+
+        <img src="@Model.Recipe.ImagePath" class="img-fluid rounded shadow-sm mb-4" alt="@Model.Recipe.Title" style="max-height: 400px; width: 100%; object-fit: cover;">
+
+        <div class="alert alert-info" role="alert">
+            @Model.Recipe.ShortDescription
+        </div>
+
+        <h3 class="border-bottom pb-2 mb-3 mt-4"><i class="bi bi-basket-fill"></i> Malzemeler</h3>
+        <p class="text-secondary" style="white-space: pre-wrap;">@Model.Recipe.Ingredients</p>
+
+        <h3 class="border-bottom pb-2 mb-3 mt-5"><i class="bi bi-list-ol"></i> Hazırlanış Talimatları</h3>
+        <p class="text-secondary" style="white-space: pre-wrap;">@Model.Recipe.Instructions</p>
+
+
+        @* YORUM BÖLÜMÜ *@
+        <h3 class="border-bottom pb-2 mb-3 mt-5"><i class="bi bi-chat-dots-fill"></i> Yorumlar (@Model.Comments.Count)</h3>
+
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+        }
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+        }
+
+        @* YORUM EKLEME FORMU *@
+        @if (HttpContext.Session.GetString("UserId") != null)
+        {
+            <div class="card p-4 mb-4 shadow-sm">
+                <h5>Yorum Ekle</h5>
+                <form method="post" asp-page-handler="AddComment">
+                    <input type="hidden" asp-for="CommentInput.RecipeId" />
+                    <div class="mb-3">
+                        <label asp-for="CommentInput.Content" class="form-label"></label>
+                        <textarea asp-for="CommentInput.Content" rows="3" class="form-control"></textarea>
+                        <span asp-validation-for="CommentInput.Content" class="text-danger small"></span>
+                    </div>
+                    <button type="submit" class="btn btn-success">Yorumu Gönder</button>
+                </form>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-warning text-center">
+                Yorum yapabilmek için lütfen <a asp-page="/Login">Giriş Yapın</a>.
+            </div>
+        }
+
+        @* YORUM LİSTESİ *@
+        @if (Model.Comments.Any())
+        {
+            <div class="list-group">
+                @foreach (var comment in Model.Comments)
+                {
+                    <div class="list-group-item list-group-item-action flex-column align-items-start mb-2">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1 fw-bold">@comment.User.Username</h5> @* DÜZELTİLDİ *@
+                            <small class="text-muted">Yorum Tarihi: Bilinmiyor</small>
+                        </div>
+                        <p class="mb-1">@comment.Content</p>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <p class="text-center text-muted">Bu tarife henüz hiç yorum yapılmamış.</p>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

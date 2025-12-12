@@ -1,0 +1,108 @@
+﻿@page
+@model YemekTarifleri.Pages.Admin.Recipes.CreateModel
+@{
+    ViewData["Title"] = "Yeni Tarif Ekle";
+    Layout = "/Pages/Admin/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-10">
+            <h3 class="mb-4">@ViewData["Title"]</h3>
+
+            @* enctype="multipart/form-data" dosya yüklemek için ZORUNLUDUR! *@
+            <form method="post" enctype="multipart/form-data">
+
+                @* Hata Özeti *@
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="row">
+
+                    @* SOL KOLON: Temel Bilgiler *@
+                    <div class="col-md-6">
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Input.Title" class="control-label"></label>
+                            <input asp-for="Input.Title" class="form-control" />
+                            <span asp-validation-for="Input.Title" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Input.CategoryId" class="control-label"></label>
+                            <select asp-for="Input.CategoryId" class="form-control"
+                                    asp-items="Model.CategoryList">
+                                <option value="">-- Kategori Seçin --</option>
+                            </select>
+                            <span asp-validation-for="Input.CategoryId" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Input.Difficulty" class="control-label"></label>
+                            <select asp-for="Input.Difficulty" class="form-control"
+                                    asp-items="@(new SelectList(Model.Difficulties))">
+                            </select>
+                            <span asp-validation-for="Input.Difficulty" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Input.PreparationTime" class="control-label"></label>
+                            <select asp-for="Input.PreparationTime" class="form-control"
+                                    asp-items="@(new SelectList(Model.PreparationTimes))">
+                            </select>
+                            <span asp-validation-for="Input.PreparationTime" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Input.CuisineType" class="control-label"></label>
+                            <select asp-for="Input.CuisineType" class="form-control"
+                                    asp-items="@(new SelectList(Model.CuisineTypes))">
+                            </select>
+                            <span asp-validation-for="Input.CuisineType" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Input.ImageFile" class="control-label"></label>
+                            <input asp-for="Input.ImageFile" type="file" class="form-control" />
+                            <span asp-validation-for="Input.ImageFile" class="text-danger"></span>
+                        </div>
+
+                    </div>
+
+                    @* SAĞ KOLON: Büyük Metin Alanları *@
+                    <div class="col-md-6">
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Input.ShortDescription" class="control-label"></label>
+                            <textarea asp-for="Input.ShortDescription" class="form-control" rows="3"></textarea>
+                            <span asp-validation-for="Input.ShortDescription" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Input.Ingredients" class="control-label"></label>
+                            <textarea asp-for="Input.Ingredients" class="form-control" rows="5"></textarea>
+                            <span asp-validation-for="Input.Ingredients" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Input.Instructions" class="control-label"></label>
+                            <textarea asp-for="Input.Instructions" class="form-control" rows="8"></textarea>
+                            <span asp-validation-for="Input.Instructions" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                @* Kaydetme Butonu *@
+                <div class="form-group mt-4">
+                    <input type="submit" value="Tarifi Kaydet" class="btn btn-success" />
+                    <a asp-page="Index" class="btn btn-secondary ms-2">Listeye Geri Dön</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
